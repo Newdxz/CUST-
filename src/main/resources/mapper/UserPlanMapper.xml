@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dxz.statement.mapper.UserPlanMapper">
+
+
+    <insert id="insertUserPlan" parameterType="com.dxz.statement.POJO.UserPlan" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user_plan(wx_openid, plan_id)
+        values (#{wxOpenid}, #{planId})
+    </insert>
+
+    <update id="updateUserPlan">
+        update user_plan
+        set plan_id = #{planId}
+        where wx_openid = #{wxOpenid}
+    </update>
+
+    <select id="selectUserPlanById" resultType="com.dxz.statement.POJO.UserPlan">
+        select *
+        from user_plan
+        where wx_openid = #{wxOpenid}
+    </select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--上面2行的是约束依赖，固定照抄就好-->
+<!--下面的才是要自己编写的地方-->
+<!--写mapper的配置文件第一步就是要写<mapper></mapper>标签-->
+<!--<mapper></mapper>标签里包含着各个CURD操作的SQL语句-->
+<mapper namespace="com.dxz.statement.mapper.wxUserMapper">
+
+
+    <select id="selectbyid" resultType="com.dxz.statement.POJO.wxUser">
+        select *
+        from wx_user
+        where wx_openid = #{wx_openid}
+    </select>
+
+    <insert id="insertuser" parameterType="com.dxz.statement.POJO.wxUser">
+        insert into wx_user
+        values (#{wxOpenid}, #{wxNickname}, #{wxAvator})
+    </insert>
+</mapper>
