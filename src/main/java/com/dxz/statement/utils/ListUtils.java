@@ -1,9 +1,6 @@
 package com.dxz.statement.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @title: ListUtils
@@ -17,24 +14,19 @@ public class ListUtils {
      * @author dxz
      * @date 10:37 2022/4/23 0023
      **/
-    public static List<String> findListDiff(List<String> list1, List<String> list2) {
+    public static List<String> findListDiff(List<String> listA, List<String> listB) {
         List<String> diff = new ArrayList<>();
-        List<String> maxList = list1;
-        List<String> minList = list2;
-        if (list2.size() > list1.size()) {
-            minList = list1;
-            maxList = list2;
+
+        Map<String, Integer> tempMap = new HashMap<>(listA.size());
+        for (String A : listA) {
+            tempMap.put(A, 1);
         }
-        Map<String, Integer> tempMap = new HashMap<>(maxList.size());
-        for (String max : maxList) {
-            tempMap.put(max, 1);
-        }
-        for (String min : minList) {
-            if (tempMap.get(min) != null) {
-                tempMap.put(min, 2);
+        for (String B : listB) {
+            if (tempMap.get(B) != null) {
+                // tempMap.put(B, 2);
                 continue;
             }
-            diff.add(min);
+            diff.add(B);
         }
         return diff;
     }

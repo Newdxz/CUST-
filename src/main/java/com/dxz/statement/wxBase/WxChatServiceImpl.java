@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,7 +30,7 @@ public class WxChatServiceImpl extends BaseWeChatServiceImpl implements WxChatSe
         // 模板Id
         String templateId = "2UpjtkOZaCotaWm3kQ67iojrgNIFjrx2YR4TVHWgvKY";
         // 模板参数
-        Map<String, WeChatTemplateMsg> sendMag = new HashMap<String, WeChatTemplateMsg>();
+        Map<String, WeChatTemplateMsg> sendMag = new HashMap<>();
         sendMag.put("MSG", new WeChatTemplateMsg(content));
         //sendMag.put("MSG", new WeChatTemplateMsg(content,"#173177"));
         this.send(openId, templateId, sendMag);
@@ -43,7 +42,6 @@ public class WxChatServiceImpl extends BaseWeChatServiceImpl implements WxChatSe
      * templateId 模板Id   测试: "ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY"
      * data       模板参数
      *
-     * @param data
      */
     private String send(String openId, String templateId, Map<String, WeChatTemplateMsg> data) throws Exception {
         String accessToken = weChetAccessToken.getToken();
@@ -69,17 +67,17 @@ public class WxChatServiceImpl extends BaseWeChatServiceImpl implements WxChatSe
         wxPush.setAppToken("AT_RUve1Ju7RKZag0f8566jBfmmDx1U93ub");
         StringBuilder res = new StringBuilder();
         res.append("上新了");
-
+        log.info("要发送的lists = {}", lists.getWxTsChildren());
         // 选出库存大于0的;
-        List<WxTsChild> wxTsChildren = lists.getWxTsChildren()
-                .stream().filter(s -> s.getStockqty() > 0).collect(Collectors.toList());
+        List<WxTsChild> wxTsChildren = lists.getWxTsChildren();
         if (wxTsChildren.size() > 0) {
             for (WxTsChild wxTsChild : wxTsChildren) {
                 res.append(wxTsChild.getName()).append("、");
             }
         }
-
-        //wxPush.setSummary(res.substring(0, res.length() - 1));
+        if (res.length() < 100) {
+            wxPush.setSummary(res.substring(0, res.length() - 1));
+        }
         wxPush.setContent(res.substring(0, res.length() - 1));
         List<String> uids = new ArrayList<>();
         //HG
@@ -96,7 +94,7 @@ public class WxChatServiceImpl extends BaseWeChatServiceImpl implements WxChatSe
         String jsonString = JSON.toJSONString(wxPush);
         HttpEntity<String> formEntity = new HttpEntity<>(jsonString, headers);
         ResponseEntity<String> entity = restTemplate.postForEntity(url, formEntity, String.class);
-        log.info("推送接口返回 body= {}",entity.getBody());
+        log.info("推送接口返回 body= {}", entity.getBody());
         //wxChatService.sendTest(openId, content);
         new MyResultMap().success();
     }
