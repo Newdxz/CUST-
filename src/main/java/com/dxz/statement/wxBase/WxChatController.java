@@ -61,6 +61,7 @@ public class WxChatController {
                     .filter(TsChild -> diffProduct.contains(TsChild.getName()))
                     .collect(Collectors.toList());
             allYiJiaInfo.setWxTsChildren(wxTsChildren);
+            log.info("上次请求商品为 = {}", oldList);
             log.info("进行数据推送, 不同商品diffProduct = {}", diffProduct);
             wxChatService.sendTest(allYiJiaInfo);
             pre = allYiJiaInfo;
