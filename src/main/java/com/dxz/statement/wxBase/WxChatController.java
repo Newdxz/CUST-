@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +29,8 @@ public class WxChatController {
     private YiJiaApi yjApi;
 
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0/1 * * * * ?")
     public void diff() throws InterruptedException {
-        List<WxTsChild> res = new ArrayList<>();
         // 1. 获取易佳超市信息;
         WxTS allYiJiaInfo = yjApi.getAllYiJiaInfo();
         // 过滤出库存大于0的商品

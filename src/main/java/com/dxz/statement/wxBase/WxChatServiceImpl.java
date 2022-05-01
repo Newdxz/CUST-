@@ -61,6 +61,7 @@ public class WxChatServiceImpl extends BaseWeChatServiceImpl implements WxChatSe
      * 我的openId:  o8nrg503tfKwepDE4zKeP2g9PujU
      * AT_RUve1Ju7RKZag0f8566jBfmmDx1U93ub
      */
+    @Override
     public void sendTest(WxTS lists) {
         WxPush wxPush = new WxPush();
         String url = "http://wxpusher.zjiecode.com/api/send/message";
